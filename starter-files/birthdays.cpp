@@ -144,6 +144,34 @@ void print10LeapYears();
  */
 void birthdays() {    
     // TODO: implement
+    //only 1, 2, 3 are in range for choice / menu selection
+    int menuChoice = 0;
+//begin
+    printHeading();
+
+    while (menuChoice != 3) {
+ 
+        //getMenuChoice(); //do i need to call this separately??
+        menuChoice = getMenuChoice();
+
+        if (menuChoice == 1){
+        cout << "Enter your date of birth" << endl;
+        cout << "format: month / day / year  --> " << endl;
+        //call some function
+        }
+        if (menuChoice ==2 ){
+        cout << "Enter year --> " << endl;
+          
+        }
+
+        
+    } //end of outer while loop
+
+    //getMenuChoice(); //ugh i think get menu choice has to be in a loop in this
+    //function instead. this is going to be the inner while loop of a nested while
+
+ //end
+    printCloser();
 }
 
 
@@ -179,30 +207,108 @@ void printMenu() {
 
 int getMenuChoice() {
     // TODO: implement
+    //only 1, 2, 3 are in range for choice / menu selection
+    int menuChoice = 0;
+
     
+        //print menu to screen
+        
+        
+
+         while (menuChoice !=1 ||menuChoice != 2 || menuChoice != 3){
+        //print menu to screen
+        //printMenu();
+        printMenu();
+        //get info, set variable from function call
+        //getMenuChoice(); //do i need to call this separately??
+         cin >> menuChoice;
+
+        if (menuChoice !=1 ||menuChoice != 2 || menuChoice != 3){
+        //tells user the choice is invalid and the loop iterates again
+        cout << "Invalid menu choice" << endl;
+        }
+    } //end of outer while loop
+
     // returning 0 to avoid compile error
-    return 0;
+    //return 0;
+    return menuChoice;
 }
 
 bool isGregorianDate(int month, int day, int year) {
     // TODO: implement
-
-    // returning false to avoid compile error
-    return false;
+    // 9, 14, 1752
+    // And day on or after September 14th, 1752 is a Gregorian date
+    if (year >= 1753) {
+        return true;
+    }
+    else if (year == 1752) {
+        if (month > 9) {
+            return true;
+        }
+        if (month == 9) {
+            if (day >= 14) {
+                return true;
+            }
+        }
+        // Returns false is the month is less than 9 or the day isn't >= 14
+        return false;
+    }
+    // Returns false is year if less than 1752
+    else {
+        return false;
+    }
 }
 
 bool isLeapYear(int year) {
     // TODO: implement
-    
-    // returning false to avoid compile error
-    return false;
+    if (year % 400 == 0){
+       return true;
+    }
+    else if ((year % 100 != 0) && (year % 4 == 0)){
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 
 bool isValidDate(int month, int day, int year) {
     // TODO: implement
-    
-    // returning false to avoid compile error
+    // If it isn't a gregorian date the function is going to return false and we are done
+    if (isGregorianDate(month, day, year) == false) {
+        return false;
+    }
+    // If month isn't valid the function is going to return false and we are done
+    if (month < 1 || month > 12) {
+        return false;
+    }
+    // Check if the year is a leap year
+    bool leapYear = isLeapYear(year);
+    // April 4, June 6, September 9, November 11
+    if (month == 4 || month == 6 || month == 9 || month == 11) {
+        if (day >= 1 && day <= 30) {
+            return true;
+        }
+    }
+    // January 1, March 3, May 5, July 7, August 8, October 10, December 12
+    if (month == 1 || month == 3 || month == 5 || month == 8 || month == 10 || month ==12) {
+        if (day >= 1 && day <= 31) {
+            return true;
+        }
+    }
+    // February 2 check
+    if (leapYear == true && month == 2) {
+        if (day >= 1 && day <= 29) {
+            return true;
+        }
+    }
+    if (leapYear == false && month == 2) {
+        if (day >= 1 && day <= 28) {
+            return true;
+        }
+    }
+    // Returns false after checking all other statements for a valid date 
     return false;
 }
 
